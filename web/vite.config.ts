@@ -34,7 +34,7 @@ export default defineConfig({
   build: {
     target: 'es2022',
     sourcemap: true,
-    chunkSizeWarningLimit: 900,
+    chunkSizeWarningLimit: 1200,
     rollupOptions: { output: { manualChunks: { maplibre: ['maplibre-gl'], react: ['react', 'react-dom'] } } },
   },
   test: { environment: 'node', include: ['src/**/*.test.ts'], testTimeout: 60_000 },

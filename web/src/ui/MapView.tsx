@@ -1,10 +1,14 @@
-import maplibregl, { type GeoJSONSource, type Map as MlMap } from 'maplibre-gl';
+import { LngLatBounds, Map as MlMap, Marker, NavigationControl, setWorkerUrl, type GeoJSONSource, type MapMouseEvent } from 'maplibre-gl';
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useEffect, useRef } from 'react';
 import { legMode } from '../domain/emissions';
 import type { ContextData } from '../domain/fusion';
 import type { Journey, LatLon, NetworkData, Place } from '../domain/types';
 import { MODE_COLOR } from './format';
+
+// MapLibre 6 carga su Worker como módulo aparte: se sirve desde el propio origen (CSP worker-src 'self').
+setWorkerUrl(maplibreWorkerUrl);
 
 /** Estilo vectorial abierto sin claves ni cookies (OpenFreeMap, datos © OpenStreetMap). */
 const STYLE_URL = 'https://tiles.openfreemap.org/styles/positron';
@@ -62,20 +66,20 @@ function stationsGeoJson(net: NetworkData, ctx: ContextData | null): GeoJSON.Fea
 export function MapView({ network, ctx, journey, origin, dest, showStations, onPick }: Props) {
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<MlMap | null>(null);
-  const markers = useRef<maplibregl.Marker[]>([]);
+  const markers = useRef<Marker[]>([]);
   const onPickRef = useRef(onPick);
   onPickRef.current = onPick;
 
   useEffect(() => {
     if (!container.current) return;
-    const m = new maplibregl.Map({
+    const m = new MlMap({
       container: container.current,
       style: STYLE_URL,
       center: MADRID,
       zoom: 12,
       attributionControl: { compact: true, customAttribution: 'Powered by CRTM · EMT Madrid · BiciMAD' },
     });
-    m.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+    m.addControl(new NavigationControl({ showCompass: false }), 'top-right');
     m.on('load', () => {
       m.addSource('journey', { type: 'geojson', data: emptyFc() });
       m.addSource('stations', { type: 'geojson', data: emptyFc() });
@@ -98,7 +102,7 @@ export function MapView({ network, ctx, journey, origin, dest, showStations, onP
         paint: { 'line-color': ['get', 'color'], 'line-width': 3, 'line-dasharray': [1, 2] },
       });
     });
-    m.on('click', (e) => onPickRef.current({ lat: e.lngLat.lat, lon: e.lngLat.lng }));
+    m.on('click', (e: MapMouseEvent) => onPickRef.current({ lat: e.lngLat.lat, lon: e.lngLat.lng }));
     map.current = m;
     return () => m.remove();
   }, []);
@@ -119,9 +123,9 @@ export function MapView({ network, ctx, journey, origin, dest, showStations, onP
     const apply = () => {
       (m.getSource('journey') as GeoJSONSource | undefined)?.setData(journey ? journeyGeoJson(journey, network) : emptyFc());
       if (journey) {
-        const b = new maplibregl.LngLatBounds();
-        journeyGeoJson(journey, network).features.forEach((f) =>
-          (f.geometry as GeoJSON.LineString).coordinates.forEach((c) => b.extend(c as [number, number])),
+        const b = new LngLatBounds();
+        journeyGeoJson(journey, network).features.forEach((f: GeoJSON.Feature) =>
+          (f.geometry as GeoJSON.LineString).coordinates.forEach((c: GeoJSON.Position) => b.extend(c as [number, number])),
         );
         m.fitBounds(b, { padding: 60, maxZoom: 15, duration: 600 });
       }
@@ -141,7 +145,7 @@ export function MapView({ network, ctx, journey, origin, dest, showStations, onP
       el.className = `pin ${cls}`;
       el.setAttribute('aria-label', label);
       el.textContent = cls === 'pin-origin' ? 'A' : 'B';
-      markers.current.push(new maplibregl.Marker({ element: el }).setLngLat([p.lon, p.lat]).addTo(m));
+      markers.current.push(new Marker({ element: el }).setLngLat([p.lon, p.lat]).addTo(m));
     };
     add(origin, 'pin-origin', 'Origen');
     add(dest, 'pin-dest', 'Destino');
