@@ -1,0 +1,175 @@
+{
+  "name": "demand-lgbm-v1",
+  "task": "Previsión de viajes diarios del sistema BiciMAD (P10/P50/P90 calibrados)",
+  "method": "Tendencia log-lineal + LightGBM cuantílico sobre residuo + calibración conforme (CQR)",
+  "trained_at": "2026-10-26T22:26:46+00:00",
+  "training_range": [
+    "2024-02-01",
+    "2025-12-31"
+  ],
+  "n_days": 700,
+  "features": [
+    "dow",
+    "month",
+    "doy_sin",
+    "doy_cos",
+    "is_weekend",
+    "is_holiday",
+    "is_bridge",
+    "temp_max",
+    "temp_min",
+    "precip",
+    "rainy",
+    "wind_max"
+  ],
+  "trend_growth_per_year": 0.49986624954016334,
+  "conformal_margin_log": 0.10461212372745304,
+  "data_sources": [
+    "datos.madrid.es 900043 (viajes diarios BiciMAD)",
+    "Open-Meteo archive",
+    "holidays (ES-MD)"
+  ],
+  "personal_data": "Ninguno: series agregadas del sistema",
+  "validation": "Backtesting con origen móvil, 6 folds mensuales; CQR en línea",
+  "folds": [
+    {
+      "month": "2025-07",
+      "mae_model": 2389.6688500895098,
+      "mae_climatology": 13471.55,
+      "mae_seasonal_naive": 1999.8387096774193,
+      "coverage_80_raw": 0.5806451612903226,
+      "coverage_80_conformal": 1.0,
+      "mean_rel_width": 0.4010890402472719
+    },
+    {
+      "month": "2025-08",
+      "mae_model": 2830.354332514924,
+      "mae_climatology": 11337.120967741936,
+      "mae_seasonal_naive": 4757.677419354839,
+      "coverage_80_raw": 0.41935483870967744,
+      "coverage_80_conformal": 0.7096774193548387,
+      "mean_rel_width": 0.37440461555481314
+    },
+    {
+      "month": "2025-09",
+      "mae_model": 3929.6925004427844,
+      "mae_climatology": 19464.320000000003,
+      "mae_seasonal_naive": 5890.166666666667,
+      "coverage_80_raw": 0.43333333333333335,
+      "coverage_80_conformal": 0.9,
+      "mean_rel_width": 0.3140290432790965
+    },
+    {
+      "month": "2025-10",
+      "mae_model": 3621.583750956615,
+      "mae_climatology": 19529.57419354839,
+      "mae_seasonal_naive": 3332.2258064516127,
+      "coverage_80_raw": 0.4838709677419355,
+      "coverage_80_conformal": 0.8709677419354839,
+      "mean_rel_width": 0.25081100097485237
+    },
+    {
+      "month": "2025-11",
+      "mae_model": 8009.115083958713,
+      "mae_climatology": 9382.413333333332,
+      "mae_seasonal_naive": 7193.966666666666,
+      "coverage_80_raw": 0.36666666666666664,
+      "coverage_80_conformal": 0.43333333333333335,
+      "mean_rel_width": 0.3242586626526896
+    },
+    {
+      "month": "2025-12",
+      "mae_model": 7542.661670621685,
+      "mae_climatology": 8397.429032258064,
+      "mae_seasonal_naive": 7805.129032258064,
+      "coverage_80_raw": 0.25806451612903225,
+      "coverage_80_conformal": 0.45161290322580644,
+      "mean_rel_width": 0.45870199662832134
+    }
+  ],
+  "metrics": {
+    "mae_model": 4720.512698097372,
+    "mae_climatology": 13597.067921146954,
+    "mae_seasonal_naive": 5163.167383512545,
+    "coverage_80_raw": 0.4236559139784946,
+    "coverage_80_conformal": 0.7275985663082437,
+    "mean_rel_width": 0.35388239322284076,
+    "mae_ratio_vs_climatology": 0.3471713699948321,
+    "mape_model": 0.11169631336477215
+  },
+  "feature_importance_gain": {
+    "dow": 1129.7,
+    "month": 292.9,
+    "doy_sin": 1945.3,
+    "doy_cos": 1294.3,
+    "is_weekend": 71.2,
+    "is_holiday": 136.6,
+    "is_bridge": 0.0,
+    "temp_max": 1958.6,
+    "temp_min": 1013.7,
+    "precip": 727.5,
+    "rainy": 15.2,
+    "wind_max": 1017.1
+  },
+  "reference_profile": {
+    "temp_max": [
+      4.3,
+      10.6,
+      12.88,
+      15.2,
+      17.5,
+      20.85,
+      24.2,
+      28.0,
+      31.9,
+      35.6,
+      40.7
+    ],
+    "temp_min": [
+      -3.9,
+      2.2,
+      4.4,
+      6.570000000000001,
+      8.1,
+      9.9,
+      12.2,
+      15.3,
+      18.24000000000001,
+      21.3,
+      26.3
+    ],
+    "precip": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      1.2,
+      5.5100000000000025,
+      40.0
+    ],
+    "wind_max": [
+      3.9,
+      7.99,
+      10.3,
+      12.4,
+      13.8,
+      15.4,
+      17.1,
+      18.830000000000005,
+      20.620000000000005,
+      24.01,
+      48.2
+    ]
+  },
+  "limitations": [
+    "Sin retardos de la serie: el dato abierto se publica con retraso.",
+    "La tendencia se extrapola desde el último dato publicado; cambios de tarifa o de flota no se anticipan.",
+    "Demanda agregada del sistema, no por estación.",
+    "Meteorología diaria de un único punto (centro de Madrid)."
+  ],
+  "promotion": "Manual por técnico vía Pull Request (config/overrides.yaml: promoted_demand_model)"
+}

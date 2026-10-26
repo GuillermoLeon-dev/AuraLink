@@ -1,0 +1,95 @@
+name: Datos + despliegue en GitHub Pages
+
+# Refresca el contexto (BiciMAD, meteorología, NO2, tráfico), evalúa umbrales, abre/actualiza
+# Issues de alerta para el técnico y publica la web estática con los PDFs de documentación.
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  issues: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with: { enable-cache: true }
+      - run: uv sync --locked --no-dev
+        working-directory: ml
+
+      # Red GTFS: se recompila como mucho una vez al día (caché por fecha)
+      - id: day
+        run: echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        id: rawcache
+        with:
+          path: data/raw
+          key: raw-${{ steps.day.outputs.date }}
+      - name: Descargar datos abiertos
+        if: steps.rawcache.outputs.cache-hit != 'true'
+        run: uv run --directory ml auralink-ml fetch-data --no-training
+      - run: uv run --directory ml auralink-ml compile-network
+
+      # Instantáneas GBFS: caché rodante (solo datos agregados de estaciones, sin datos personales)
+      - uses: actions/cache/restore@v4
+        with:
+          path: data/gbfs_snapshots
+          key: snapshots-${{ github.run_id }}
+          restore-keys: snapshots-
+      - name: Ingesta, nowcast, fusión y umbrales
+        run: uv run --directory ml auralink-ml refresh-context
+      - name: Retener solo 7 días de instantáneas
+        run: find data/gbfs_snapshots -name '*.csv' -mtime +7 -delete || true
+      - uses: actions/cache/save@v4
+        with:
+          path: data/gbfs_snapshots
+          key: snapshots-${{ github.run_id }}
+
+      - name: Alertas → Issues (decisión del técnico)
+        if: github.event_name != 'pull_request'
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: uv run --directory ml python -m auralink_ml.issues
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: npm ci
+        working-directory: web
+      - run: npm run build
+        working-directory: web
+        env:
+          VITE_BASE: /${{ github.event.repository.name }}/
+          VITE_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+
+      - uses: typst-community/setup-typst@v4
+      - name: PDFs de documentación
+        run: |
+          mkdir -p web/dist/docs
+          for f in docs/[0-9]*.typ; do
+            typst compile --root . --font-path docs/template/fonts "$f" "web/dist/docs/$(basename "${f%.typ}").pdf"
+          done
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: web/dist }
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

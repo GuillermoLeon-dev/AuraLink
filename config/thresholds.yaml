@@ -1,0 +1,53 @@
+# Umbrales de decisión. El sistema NUNCA actúa solo: al superar un umbral de tipo "alert"
+# genera una alerta (Issue de GitHub) y un técnico decide. Los de tipo "notice" solo informan
+# al usuario final en la propia ruta (no cambian ninguna configuración).
+# Cambios solo vía Pull Request revisada (CODEOWNERS). Ver AURA-DOC-04.
+version: 1
+last_reviewed: "2026-10-26"
+thresholds:
+  bike_availability_notice:
+    kind: notice
+    description: "P(encontrar bici) por debajo de este valor marca el tramo en bici como poco fiable."
+    value: 0.6
+  dock_availability_notice:
+    kind: notice
+    description: "P(encontrar anclaje) por debajo de este valor marca la devolución como poco fiable."
+    value: 0.6
+  station_empty_alert:
+    kind: alert
+    description: "Estaciones con P(bici a 30 min) inferior a este valor: proponer al técnico excluirlas de las recomendaciones o solicitar reequilibrio."
+    value: 0.15
+    min_stations: 5
+  system_empty_share_alert:
+    kind: alert
+    description: "Proporción de estaciones sin bicis por encima de este valor."
+    value: 0.25
+  rain_notice:
+    kind: notice
+    description: "Precipitación prevista (mm/h) a partir de la cual se penaliza el confort de bici y a pie."
+    value: 0.5
+  no2_alert:
+    kind: alert
+    description: "NO2 horario medio en la ciudad (µg/m3) a partir del cual se propone al técnico activar aviso de exposición en modos activos. Referencia: umbral de información horario 200 µg/m3 (RD 102/2011) y guía OMS 2021."
+    value: 100
+  traffic_congestion_notice:
+    kind: notice
+    description: "Índice de carga media (0-100) a partir del cual se aplica un factor de retraso a los tramos de bus."
+    value: 40
+  demand_forecast_uncertainty_alert:
+    kind: alert
+    description: "Anchura relativa del intervalo P10-P90 de la demanda prevista por encima de este valor."
+    value: 0.6
+  drift_psi_alert:
+    kind: alert
+    description: "Population Stability Index de variables de entrada del modelo de demanda; > 0.2 indica deriva relevante (proponer reentrenamiento)."
+    value: 0.2
+  model_degradation_alert:
+    kind: alert
+    description: "Ratio MAE modelo / MAE línea base en backtesting por encima del cual no se recomienda promocionar el modelo."
+    value: 1.0
+  data_staleness_alert:
+    kind: alert
+    description: "Minutos de antigüedad máxima de una fuente antes de alertar (valor por defecto; per_source lo afina: la calidad del aire se valida con 1-2 h de retraso)."
+    value: 60
+    per_source: { gbfs: 30, weather: 240, air: 180, traffic: 30 }

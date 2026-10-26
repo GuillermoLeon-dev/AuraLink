@@ -1,0 +1,50 @@
+name: Reentrenar modelo de demanda (manual)
+
+# CRISP-ML(Q) · Modeling + Evaluation. Lo lanza un técnico (p. ej. tras una alerta de deriva).
+# El resultado NO se despliega solo: abre una Pull Request con el modelo y su model card para
+# que un revisor (CODEOWNERS) decida si se promociona.
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Motivo (enlace a la Issue de alerta)"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --locked --no-dev
+        working-directory: ml
+      - run: uv run --directory ml auralink-ml fetch-data
+      - id: train
+        run: |
+          uv run --directory ml auralink-ml train-demand | tee metrics.json
+      - name: Comprobar que mejora a la línea base
+        run: |
+          python3 - <<'EOF'
+          import json, sys
+          m = json.load(open("metrics.json"))
+          ratio = m["mae_ratio_vs_climatology"]
+          print(f"MAE modelo / climatología = {ratio:.3f}")
+          sys.exit(0 if ratio < 1.0 else 1)
+          EOF
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: retrain/demand-${{ github.run_id }}
+          title: "Reentrenamiento del modelo de demanda (${{ github.run_id }})"
+          body: |
+            Motivo: ${{ inputs.reason }}
+
+            Métricas de backtesting en `web/public/data/model_card.json`.
+            **Decisión del técnico**: aprobar esta PR promociona el modelo. Si no mejora o la
+            cobertura del intervalo P10–P90 cae por debajo de lo aceptable, cerrar sin fusionar.
+          add-paths: |
+            data/artifacts/models/**
+            web/public/data/model_card.json

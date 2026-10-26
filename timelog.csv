@@ -1,0 +1,12 @@
+etapa,inicio,fin,duracion_min
+0. Planificación (exploración + plan),2026-10-26T22:56:55+01:00,2026-10-26T23:01:53+01:00,5.0
+1. Setup de herramientas,2026-10-26T23:02:20+01:00,2026-10-26T23:05:45+01:00,3.4
+2. Estudio de mercado y estado del arte,2026-10-26T23:05:45+01:00,2026-10-26T23:09:22+01:00,3.6
+3. Diseño (propuesta y arquitectura),2026-10-26T23:09:22+01:00,2026-10-26T23:12:34+01:00,3.2
+4. Implementación: datos y motor de rutas,2026-10-26T23:12:34+01:00,2026-10-26T23:21:16+01:00,8.7
+"5. Implementación: ML, data fusion y alertas",2026-10-26T23:21:16+01:00,2026-10-26T23:31:04+01:00,9.8
+6. Implementación: frontend web,2026-10-26T23:31:04+01:00,2026-10-26T23:39:11+01:00,8.1
+7. CI/CD GitHub Pages y ficheros de repositorio,2026-10-26T23:39:11+01:00,2026-10-26T23:41:05+01:00,1.9
+"8. Documentación técnica, legal (RGPD/EIPD) y económica",2026-10-26T23:41:05+01:00,2026-10-26T23:49:25+01:00,8.3
+"9. Verificación integral (tests, build, docs)",2026-10-26T23:49:25+01:00,2026-10-26T23:50:37+01:00,1.2
+10. Cambio de nombre y retirada de marca,2026-10-27T00:01:18+01:00,2026-10-27T00:03:56+01:00,2.6
