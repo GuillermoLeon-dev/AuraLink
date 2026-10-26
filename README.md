@@ -24,7 +24,7 @@ cd ml && uv sync && uv run auralink-ml fetch-data && uv run auralink-ml compile-
 cd web && npm ci && npm run dev
 ```
 
-Abra http://localhost:5173, pulse en el mapa el origen y el destino y busque.
+Abra http://localhost:5173, pulse en el mapa el origen y el destino y busque. Tutorial completo: `docs/09-guia-de-uso.typ` (AURA-DOC-09).
 
 ## Calidad
 
@@ -53,6 +53,7 @@ for f in docs/[0-9]*.typ; do typst compile --root . --font-path docs/template/fo
 | AURA-DOC-06 | Protección de datos (RGPD, LOPDGDD, AEPD, EDPB), RAT, riesgos y EIPD |
 | AURA-DOC-07 | Viabilidad económica |
 | AURA-DOC-08 | Informe de tiempos del experimento |
+| AURA-DOC-09 | Guía de uso (tutorial con capturas) |
 
 ## Despliegue en GitHub Pages
 

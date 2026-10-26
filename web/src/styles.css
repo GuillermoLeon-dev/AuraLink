@@ -72,7 +72,7 @@ a { color: var(--blue70); }
 .side { overflow-y: auto; border-right: 1px solid var(--grey2); background: var(--bg); }
 .mapwrap { position: relative; min-height: 320px; }
 .map, .map.maplibregl-map { position: absolute; inset: 0; }
-.map-toggle { position: absolute; left: 12px; bottom: 12px; background: var(--card); padding: 6px 10px; border-radius: var(--radius); font-size: 0.85rem; box-shadow: 0 1px 4px rgba(3, 26, 52, 0.2); }
+.map-toggle { position: absolute; left: 12px; top: 12px; background: var(--card); padding: 6px 10px; border-radius: var(--radius); font-size: 0.85rem; box-shadow: 0 1px 4px rgba(3, 26, 52, 0.2); }
 
 .pad { padding: 16px; }
 .pad-x { padding: 0 16px; }
@@ -139,6 +139,11 @@ h4 { margin: 12px 0 4px; font-size: 0.9rem; }
 .chart { width: 100%; max-width: 420px; height: auto; }
 .prose dt { font-weight: 700; margin-top: 10px; }
 .prose dd { margin: 2px 0 0; }
+
+.docs { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.docs a { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--grey2); border-radius: var(--radius); text-decoration: none; color: var(--fg); background: var(--card); }
+.docs a:hover, .docs a:focus-visible { border-color: var(--blue); box-shadow: 0 0 0 2px var(--blue20); }
+.doc-code { font-size: 0.72rem; font-weight: 700; color: var(--blue70); letter-spacing: 0.03em; }
 
 .privacy-banner { padding: 8px 16px; font-size: 0.82rem; background: var(--grey1); border-top: 1px solid var(--grey2); }
 

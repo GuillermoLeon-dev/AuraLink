@@ -5,9 +5,10 @@ import { JourneyCard } from './JourneyCard';
 import { MapView } from './MapView';
 import { OpsConsole } from './OpsConsole';
 import { PlannerPanel } from './PlannerPanel';
+import { DocsPanel } from './DocsPanel';
 import { PrivacyBanner, PrivacyDetails } from './PrivacyNotice';
 
-type Tab = 'plan' | 'ops' | 'privacy';
+type Tab = 'plan' | 'ops' | 'docs' | 'privacy';
 
 const pickedPlace = (p: LatLon, label: string): Place => ({ ...p, label });
 
@@ -49,9 +50,9 @@ export function App() {
           <span><strong>Aura Link</strong> <span className="muted">· rutas multimodales sostenibles · Madrid</span></span>
         </div>
         <nav aria-label="Secciones">
-          {(['plan', 'ops', 'privacy'] as Tab[]).map((t) => (
+          {(['plan', 'ops', 'docs', 'privacy'] as Tab[]).map((t) => (
             <button key={t} className={tab === t ? 'tab active' : 'tab'} onClick={() => setTab(t)} aria-current={tab === t}>
-              {{ plan: 'Planificar', ops: 'Consola técnica', privacy: 'Privacidad' }[t]}
+              {{ plan: 'Planificar', ops: 'Consola técnica', docs: 'Documentación', privacy: 'Privacidad' }[t]}
             </button>
           ))}
         </nav>
@@ -94,6 +95,7 @@ export function App() {
             </>
           )}
           {tab === 'ops' && <OpsConsole ctx={planner.ctx} />}
+          {tab === 'docs' && <DocsPanel />}
           {tab === 'privacy' && <PrivacyDetails />}
         </section>
         <section className="mapwrap">
