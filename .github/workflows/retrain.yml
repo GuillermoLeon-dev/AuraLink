@@ -35,7 +35,7 @@ jobs:
           print(f"MAE modelo / climatología = {ratio:.3f}")
           sys.exit(0 if ratio < 1.0 else 1)
           EOF
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         with:
           branch: retrain/demand-${{ github.run_id }}
           title: "Reentrenamiento del modelo de demanda (${{ github.run_id }})"
