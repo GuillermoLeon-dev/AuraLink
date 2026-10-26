@@ -1,0 +1,14 @@
+# Factores de emisión en gCO2e por pasajero-km (uso directo + aguas arriba de combustible/electricidad).
+# Referencia: UK DESNZ "Greenhouse gas reporting: conversion factors 2025", hoja "Business travel - land".
+#   https://www.gov.uk/government/collections/government-conversion-factors-for-company-reporting
+# No se ha localizado una tabla oficial española equivalente por modo urbano: valores A VALIDAR
+# por el técnico y sustituibles por datos de memoria ambiental de EMT / Metro de Madrid / CRTM.
+version: 1
+last_reviewed: "2026-10-26"
+factors_g_per_pkm:
+  metro: 27.8        # London Underground (DESNZ 2025)
+  light_rail: 28.6   # Light rail and tram (DESNZ 2025)
+  bus: 103.9         # Local bus, average (DESNZ 2025)
+  bike_share: 0.0    # Uso directo; ciclo de vida excluido (ver AURA-DOC-04)
+  walk: 0.0
+  car_reference: 166.0  # Coche medio, solo para mostrar el ahorro frente al vehículo privado

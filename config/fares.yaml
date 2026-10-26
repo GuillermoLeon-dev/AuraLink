@@ -1,0 +1,32 @@
+# Tarifas usadas por el motor de rutas (céntimos de euro).
+# Cambios solo vía Pull Request revisada por un técnico (CODEOWNERS).
+# Fuentes:
+#  - CRTM: precios 2026 mantenidos respecto a 2025 (nota de prensa 29/12/2025)
+#    https://crtm.es/comunicacion/sala-de-prensa/noticias/noticias/29122025-la-comunidad-de-madrid-mantiene-los-precios-del-transporte-publico/
+#  - Metro sencillo: 1,50 EUR hasta 5 estaciones, +0,10 EUR por estación adicional, máx. 2,00 EUR
+#    (redtransporte.com/madrid/precios-abonos.html) -> A VALIDAR por técnico con BOCM vigente.
+#  - Metrobús 10 viajes: 12,20 EUR (1,22 EUR/viaje) -> A VALIDAR.
+#  - BiciMAD abonado: 0,50 EUR primeros 30 min, 0,60 EUR cada 30 min adicional;
+#    ocasional: 2 EUR primera hora (idealista.com/news/node/729311) -> A VALIDAR, fuente antigua.
+version: 1
+last_reviewed: "2026-10-26"
+profiles:
+  single:
+    label: "Billete sencillo"
+    metro: { base: 150, included_stations: 5, per_extra_station: 10, max: 200 }
+    light_rail: { flat: 150 }
+    bus: { flat: 150 }
+    bike_share: { first_30_min: 200, per_extra_30_min: 200 }   # usuario ocasional
+  ten_trip:
+    label: "Metrobús 10 viajes"
+    metro: { flat: 122 }
+    light_rail: { flat: 122 }
+    bus: { flat: 122 }
+    bike_share: { first_30_min: 50, per_extra_30_min: 60 }
+  pass:
+    label: "Abono transporte (coste marginal)"
+    metro: { flat: 0 }
+    light_rail: { flat: 0 }
+    bus: { flat: 0 }
+    bike_share: { first_30_min: 50, per_extra_30_min: 60 }
+default_profile: single

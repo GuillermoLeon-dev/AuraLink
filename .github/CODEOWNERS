@@ -1,0 +1,4 @@
+# Decisiones operativas: umbrales, exclusiones y promoción de modelos requieren revisión técnica.
+/config/                 @auralink/tecnicos-operacion
+/data/artifacts/models/  @auralink/tecnicos-operacion @auralink/ml
+/.github/                @auralink/plataforma

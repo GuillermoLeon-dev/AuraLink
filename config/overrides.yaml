@@ -1,0 +1,6 @@
+# Decisiones del técnico tras revisar alertas. Solo se modifica vía Pull Request.
+# Cada entrada debe referenciar la Issue de alerta que la motiva (trazabilidad).
+version: 1
+excluded_bike_stations: []      # p. ej. - { station_id: "1406", issue: 12, until: "2026-11-01" }
+exposure_notice_active: false   # aviso de exposición a NO2 en modos activos
+promoted_demand_model: "demand-lgbm-v1"

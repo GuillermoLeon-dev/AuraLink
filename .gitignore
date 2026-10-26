@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+ml/.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Node
+web/node_modules/
+web/dist/
+
+# Datos descargados y derivados (se regeneran en CI)
+data/raw/
+data/gbfs_snapshots/
+data/artifacts/mlruns/
+data/artifacts/alerts_log.jsonl
+web/public/data/network.json
+web/public/data/context.json
+web/public/data/alerts.json
+
+# Documentación compilada
+docs/pdf/
+
+# Entorno local
+.claude/settings.local.json
+.env
+*.log

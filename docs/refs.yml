@@ -1,0 +1,106 @@
+studer2021:
+  type: article
+  title: "Towards CRISP-ML(Q): A Machine Learning Process Model with Quality Assurance Methodology"
+  author: ["Studer, Stefan", "Bui, Thanh Binh", "Drescher, Christian", "Hanuschkin, Alexander", "Winkler, Ludwig", "Peters, Steven", "Müller, Klaus-Robert"]
+  date: 2021
+  parent:
+    type: periodical
+    title: Machine Learning and Knowledge Extraction
+    volume: 3
+    issue: 2
+  page-range: 392-413
+  url: https://arxiv.org/abs/2003.05155
+delling2015:
+  type: article
+  title: "Round-Based Public Transit Routing"
+  author: ["Delling, Daniel", "Pajor, Thomas", "Werneck, Renato F."]
+  date: 2015
+  parent:
+    type: periodical
+    title: Transportation Science
+    volume: 49
+    issue: 3
+baum2023:
+  type: article
+  title: "UnLimited TRAnsfers for Efficient Multimodal Journey Planning"
+  author: ["Baum, Moritz", "Buchhold, Valentin", "Sauer, Jonas", "Wagner, Dorothea", "Zündorf, Tobias"]
+  date: 2023
+  parent:
+    type: periodical
+    title: Transportation Science
+  url: https://drops.dagstuhl.de/opus/volltexte/2019/11135
+potthoff2022:
+  type: article
+  title: "Fast Multimodal Journey Planning for Three Criteria"
+  author: ["Potthoff, Moritz", "Sauer, Jonas"]
+  date: 2021
+  url: https://arxiv.org/pdf/2110.12954
+stgcn2021:
+  type: article
+  title: "A Comparative Study of Using Spatial-Temporal Graph Convolutional Networks for Predicting Availability in Bike Sharing Schemes"
+  date: 2021
+  url: https://arxiv.org/abs/2104.10644
+graphreview2023:
+  type: article
+  title: "Recent Advances in Graph-based Machine Learning for Applications in Smart Urban Transportation Systems"
+  date: 2023
+  url: https://arxiv.org/pdf/2306.01282
+globenewswire2024:
+  type: web
+  title: "Global Mobility-as-a-Service (MaaS) Market and Technology Analysis Report 2023-2030"
+  date: 2024
+  url: https://www.globenewswire.com/news-release/2024/02/07/2824950/28124/en/Global-Mobility-as-a-Service-MaaS-Market-and-Technology-Analysis-Report-2023-2030.html
+marketintelo:
+  type: web
+  title: "Multimodal Journey Planning Market Research Report 2034"
+  url: https://marketintelo.com/report/multimodal-journey-planning-market
+cbinsights:
+  type: web
+  title: "Compare Citymapper vs Moovit"
+  url: https://www.cbinsights.com/compare/citymapper-vs-moovit
+crtmlic:
+  type: web
+  title: "CRTM — Licencia de uso de datos abiertos"
+  url: https://www.crtm.es/licencia-de-uso/
+mdb2802:
+  type: web
+  title: "Mobility Database — Metro Ligero (CRTM), mdb-2802"
+  url: https://mobilitydatabase.org/feeds/gtfs/mdb-2802
+mdb794:
+  type: web
+  title: "Mobility Database — Metro de Madrid (CRTM), mdb-794"
+  url: https://mobilitydatabase.org/feeds/gtfs/mdb-794
+mdb793:
+  type: web
+  title: "Mobility Database — EMT Madrid, mdb-793"
+  url: https://mobilitydatabase.org/feeds/gtfs/mdb-793
+bicimadgbfs:
+  type: web
+  title: "Bicimad. GBFS (General Bikeshare Feed Specification) — datos.madrid.es"
+  url: https://datos.madrid.es/egob/catalogo/900021-0-bicimad-GBFS.json
+bicimadviajes:
+  type: web
+  title: "Bicimad. Histórico de total viajes por día desde 2024 — datos.madrid.es"
+  url: https://datos.madrid.es/dataset/900043-0-viajes-diario-bicimad
+openmeteo:
+  type: web
+  title: "Open-Meteo Historical Weather API"
+  url: https://open-meteo.com/en/docs/historical-weather-api
+desnz2025:
+  type: report
+  title: "Greenhouse gas reporting: conversion factors 2025 — Methodology paper"
+  author: "Department for Energy Security and Net Zero (UK)"
+  date: 2025
+  url: https://assets.publishing.service.gov.uk/media/6846b0870392ed9b784c0187/2025-GHG-CF-methodology-paper.pdf
+mistica:
+  type: web
+  title: "Mística — Telefónica design system (@telefonica/mistica, MIT)"
+  url: https://github.com/Telefonica/mistica-web
+telefonicabrand:
+  type: web
+  title: "Telefónica presenta una nueva imagen corporativa"
+  url: https://www.telefonica.com/es/sala-comunicacion/prensa/telefonica-presenta-una-nueva-imagen-corporativa-que-proyecta-su-transformacion-digital-y-tecnologica/
+tthoves:
+  type: web
+  title: "TypeType — Customization of TT Hoves for the legendary brand Telefónica"
+  url: https://typetype.org/es/blog/customization-of-tt-hoves-for-the-legendary-brand-telefonica
