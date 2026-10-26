@@ -57,7 +57,7 @@ jobs:
           for f in docs/[0-9]*.typ; do
             typst compile --root . --font-path docs/template/fonts "$f" "docs/pdf/$(basename "${f%.typ}").pdf"
           done
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with: { name: docs-pdf, path: docs/pdf }
 
   sbom:
