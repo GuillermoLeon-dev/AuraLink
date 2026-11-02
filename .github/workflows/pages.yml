@@ -80,7 +80,7 @@ jobs:
             typst compile --root . --font-path docs/template/fonts "$f" "web/dist/docs/$(basename "${f%.typ}").pdf"
           done
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v3
         with: { path: web/dist }
 
